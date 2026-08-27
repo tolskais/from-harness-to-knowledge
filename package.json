@@ -1,0 +1,21 @@
+{
+  "name": "from-harness-to-knowledge",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "node scripts/build-static.mjs",
+    "build:slidev": "slidev build slides.md --base ./ --out dist-slidev",
+    "export": "node scripts/export-pdf.mjs",
+    "verify:offline": "node scripts/verify-offline.mjs"
+  },
+  "devDependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
+    "@slidev/cli": "52.2.3",
+    "@slidev/theme-default": "^0.25.0",
+    "playwright-chromium": "1.55.0"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.62.1"
+  }
+}
