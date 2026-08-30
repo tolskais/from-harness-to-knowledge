@@ -10,15 +10,17 @@ try { ({ chromium } = await import('playwright-chromium')) }
 catch { console.error('PDF export needs playwright-chromium. Run npm install, then npm run export.'); process.exit(1) }
 function findInstalledChromium() {
   const base = path.join(os.homedir(), '.cache', 'ms-playwright')
-  if (!fs.existsSync(base)) return undefined
-  for (const dir of fs.readdirSync(base).filter(x => x.startsWith('chromium-')).sort().reverse()) {
-    const candidates = [
-      path.join(base, dir, 'chrome-linux', 'chrome'),
-      path.join(base, dir, 'chrome-linux64', 'chrome'),
-    ]
-    const found = candidates.find(fs.existsSync)
-    if (found) return found
+  if (fs.existsSync(base)) {
+    for (const dir of fs.readdirSync(base).filter(x => x.startsWith('chromium-')).sort().reverse()) {
+      const candidates = [
+        path.join(base, dir, 'chrome-linux', 'chrome'),
+        path.join(base, dir, 'chrome-linux64', 'chrome'),
+      ]
+      const found = candidates.find(fs.existsSync)
+      if (found) return found
+    }
   }
+  return ['/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/bin/google-chrome'].find(fs.existsSync)
 }
 const executablePath = findInstalledChromium()
 fs.mkdirSync(path.join(root, 'release'), { recursive: true })

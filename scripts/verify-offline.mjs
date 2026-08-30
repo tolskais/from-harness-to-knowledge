@@ -22,8 +22,8 @@ for (const file of files.filter(f => /\.(html|css|js)$/.test(f))) {
 const html = fs.readFileSync(path.join(docs, 'index.html'), 'utf8')
 const slides = (html.match(/<section class="slide/g) || []).length
 const pages = [...html.matchAll(/<footer><span>[^<]*<\/span><span>([^<]+)<\/span>/g)].map(m=>m[1])
-if (slides !== 25) failures.push(`expected 25 slides, found ${slides}`)
-if (pages.slice(0,19).some((p,i) => p !== `${String(i+1).padStart(2,'0')} / 19`)) failures.push('main page numbering mismatch')
-if (pages.slice(19).some((p,i) => p !== `A${String(i+1).padStart(2,'0')} / A06`)) failures.push('appendix page numbering mismatch')
+if (slides !== 19) failures.push(`expected 19 slides, found ${slides}`)
+if (pages.slice(0,13).some((p,i) => p !== `${String(i+1).padStart(2,'0')} / 13`)) failures.push('main page numbering mismatch')
+if (pages.slice(13).some((p,i) => p !== `A${String(i+1).padStart(2,'0')} / A06`)) failures.push('appendix page numbering mismatch')
 if (failures.length) { console.error(failures.join('\n')); process.exit(1) }
 console.log(`Offline verification passed: ${slides} slides, ${files.length} local files, no external resource requests.`)
