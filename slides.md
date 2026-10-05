@@ -1,6 +1,6 @@
 ---
 theme: default
-title: 필드 결함 기반 개발 점검 Agent
+title: 필드 결함 지식 활용 Agent
 info: 임원 보고 · 1분
 canvasWidth: 1280
 drawings:
@@ -10,9 +10,9 @@ mdc: true
 layout: deck
 ---
 
-<h1>필드 결함 기반 개발 점검 Agent</h1>
-<p class="lead">이전 세대의 결함 지식을 다음 제품의 개발 산출물에 반영</p>
+<h1>필드 결함 지식 활용 Agent</h1>
 
+<div class="generation-area previous-generation">
 <div class="generation-heading"><b>이전 세대 제품</b><span>결함 분석 · 지식 정리 · 패턴화</span></div>
 <div class="knowledge-flow" role="group" aria-label="이전 세대 제품의 결함 분석과 지식 축적">
   <div class="flow-card input-card">
@@ -25,7 +25,7 @@ layout: deck
       <div><b>수정</b><p>Code diff·Code review 이력</p></div>
       <div><b>검증</b><p>Test spec·결과·Coverage</p></div>
     </div>
-    <div class="input-key">이전 세대의 결함 ID·발생 버전으로 자료 연결</div>
+    <div class="input-key">결함 ID·제품 버전으로 자료 연결</div>
   </div>
   <div class="flow-arrow" aria-label="분석">→</div>
   <div class="flow-card analysis-card">
@@ -40,10 +40,12 @@ layout: deck
     <div class="card-label">패턴 · 지식</div>
     <h2>공통 결함 패턴 · 예방 기준</h2>
     <div class="knowledge-items"><p>유형·실행 조건별 결함 묶음</p><p>공통 원인 · 예방·검출 기준</p><p>적용 범위 · 근거 자료</p></div>
-    <div class="knowledge-evidence">결함–문서–코드–시험 연결 유지</div>
+    <div class="knowledge-evidence">각 지식에 근거 위치 기록<br>결함 ID·문서 항목·Code 위치·Test ID</div>
   </div>
 </div>
+</div>
 
+<div class="generation-area next-generation">
 <div class="application-inputs" role="group" aria-label="다음 제품의 개발 자료와 이전 세대에서 축적한 지식">
   <div class="current-input"><b>다음 제품 개발</b><span>입력 · 요구사항·설계서·Source code·Code diff·Test code·Test spec·Static analysis 결과</span><i>↓</i></div>
   <div class="knowledge-link"><span>↓</span> 이전 세대에서 축적한 지식</div>
@@ -57,4 +59,5 @@ layout: deck
     <div class="stage-card"><h3>구현</h3><div class="output-name">Source code · Unit test</div><p>Code review·Static analysis<br>수정안·Unit test 보완안</p></div>
     <div class="stage-card"><h3>시험</h3><div class="output-name">Test spec · Regression suite</div><p>Fault injection·HIL 시나리오<br>결함 패턴 기반 Test case 추가</p></div>
   </div>
+</div>
 </div>
