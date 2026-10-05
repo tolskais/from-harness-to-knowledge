@@ -1,20 +1,25 @@
-# From Harness to Knowledge
+# 필드 결함 기반 개발 점검 Agent
 
-C-level audience를 위한 30분 발표 자료입니다. 원본은 Slidev 문법으로 작성되어 있으며,
-`docs/`에는 외부 네트워크나 npm 설치 없이 실행되는 정적 버전을 함께 보관합니다.
+임베디드 소프트웨어 개발을 위한 한 장 HTML 발표 자료입니다. 약 1분 발표를 기준으로 구성했습니다.
 
-## Commands
+이전 세대 제품에서 결함 이력과 결함 발생 버전의 요구사항·설계·코드·수정 diff·시험 자료를 연결해 분석하고, 공통 패턴과 지식을 정리합니다.
+수정 내용에 따라 결함 유형을 분류하고, 결함이 드러난 실행 조건을 정리합니다. 설계·코드·시험을 대조해 원인을 검토합니다.
+다음 제품을 개발할 때, 이전 세대에서 축적한 지식과 다음 제품의 개발 자료를 대조합니다. 요구사항 명세서·추적성표·설계서·FMEA·소스 코드·단위시험·시험 명세서·회귀시험 세트의 보완안을 제안하는 흐름입니다.
+
+## 자료
+
+- `release/presentation.html`: 공유용 단일 HTML 파일. 별도 설치나 외부 네트워크 없이 브라우저에서 열 수 있습니다.
+- `docs/index.html`: 같은 자료의 정적 사이트 진입점
+- `slides.md`: Slidev 원본
+- `release/overview.png`: 전체 그림 미리보기
+
+## 명령
 
 ```bash
-npm run dev             # Slidev authoring server (npm install 필요)
-npm run build           # air-gapped 정적 사이트를 docs/에 생성
-npm run build:slidev    # Slidev 자체 번들 검증
-npm run export          # release/presentation.pdf 생성 (Chromium 필요)
-npm run verify:offline  # 외부 리소스와 누락 파일 검사
+npm run build           # 정적 HTML과 공유용 단일 HTML 생성
+npm run export          # 동일한 HTML 생성
+npm run preview         # 브라우저 레이아웃 확인과 미리보기 생성
+npm run verify:offline  # 외부 리소스 의존성 및 한 장 구성 확인
+npm run dev             # Slidev 편집 서버
+npm run build:slidev    # Slidev 번들 생성
 ```
-
-정적 사이트는 `docs/index.html`을 직접 열거나 `/docs`를 GitHub Pages 원본으로 지정해
-사용합니다. 키보드 `←/→`, `Space`, `Home`, `End`와 화면 버튼을 지원합니다.
-
-회사 사례의 구체 수치가 확보되면 7–9쪽의 `Observed` 근거를 검증된 `Measured`로
-교체하십시오. 검증되지 않은 수치는 의도적으로 넣지 않았습니다.
