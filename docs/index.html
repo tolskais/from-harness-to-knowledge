@@ -1,127 +1,126 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="light"><title>필드 결함 지식 활용 Agent</title>
-<style>:root {
-  --ink: #1c2935; --muted: #596b7a; --line: #d5e0e7;
-  --paper: #fafcfd; --blue: #225e79; --blue-soft: #eaf3f7;
-}
+<meta name="color-scheme" content="light"><title>필드 결함 지식으로 유사 결함 예방</title>
+<style>:root { --ink: #243746; --muted: #627686; --paper: #f9fbfd; --blue: #37587f; --knowledge: #316655; --line: #d8e4eb; }
 * { box-sizing: border-box; }
 html, body, #app { margin: 0; width: 100%; height: 100%; background: var(--paper); color: var(--ink); }
 body { font-family: "Noto Sans CJK KR", "Noto Sans KR", "Malgun Gothic", sans-serif; }
 .slidev-layout { padding: 0 !important; background: var(--paper) !important; }
-.slide-shell { width: 100%; height: 100%; padding: 20px 40px; display: grid; grid-template-rows: 1fr; }
-.slide-body { min-height: 0; display: flex; flex-direction: column; justify-content: center; }
-.slide-body > * { flex-shrink: 0; }
-h1 { font-size: 32px; font-weight: 750; line-height: 1.3; letter-spacing: -.035em; margin: 0 0 12px; }
-h2, h3, p { margin: 0; }
-.generation-area { border-radius: 12px; padding: 8px 12px; border-left: 5px solid; }
-.previous-generation { background: #f0ede7; border-color: #8b8174; margin-bottom: 10px; }
-.next-generation { background: #e3eff6; border-color: var(--blue); }
-.generation-heading { display: flex; align-items: baseline; gap: 16px; margin-bottom: 9px; color: #5b5145; font-size: 20px; line-height: 1.5; }
-.generation-heading span { font-size: 14px; color: var(--muted); }
-.knowledge-flow { display: grid; grid-template-columns: 374px 30px 412px 30px 1fr; align-items: stretch; }
-.flow-card { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 14px 17px; }
-.card-label { color: var(--muted); font-size: 12px; margin-bottom: 6px; font-weight: 600; }
-.flow-card h2 { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 9px; letter-spacing: -.025em; }
-.flow-card p { font-size: 14px; line-height: 1.8; color: #465a69; }
-.flow-card b { font-size: 14px; font-weight: 650; color: var(--ink); }
-.input-list { display: grid; gap: 1px; }
-.input-list > div { display: grid; grid-template-columns: 38px 1fr; gap: 6px; align-items: baseline; }
-.input-key { margin-top: 10px; color: var(--muted); font-size: 12px; }
-.analysis-method { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-.term { display: inline-block; }
-.term b { display: block; font-size: 15px; font-weight: 650; line-height: 1.5; color: var(--ink); }
-.term small { display: block; margin-top: 1px; font-size: 10px; font-weight: 400; line-height: 1.3; color: var(--muted); }
-.analysis-method .term { min-width: 100px; }
-.type-list { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-.cause-analysis { border-top: 1px solid var(--line); padding-top: 7px; display: flex; align-items: flex-start; gap: 16px; }
-.cause-analysis > b { min-width: 100px; line-height: 1.8; }
-.knowledge-card { background: #f9f7f2; border-color: #d6cec1; }
-.knowledge-card .card-label { color: #6b6051; }
-.knowledge-items { margin-top: 10px; display: grid; gap: 4px; }
-.knowledge-items p { font-size: 15px; }
-.knowledge-evidence { margin-top: 10px; padding-top: 7px; border-top: 1px solid #d6cec1; color: #6b6051; font-size: 12px; line-height: 1.55; }
-.flow-arrow { display: grid; place-items: center; color: var(--blue); font-size: 25px; }
-.application-inputs { height: 54px; display: grid; grid-template-columns: 1fr 330px; align-items: center; gap: 12px; }
-.current-input { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); }
-.current-input b { color: var(--blue); font-size: 20px; }
-.current-input b, .current-input i { flex-shrink: 0; }
-.current-input span { min-width: 0; line-height: 1.5; }
-.current-input i { color: var(--blue); font-size: 24px; font-style: normal; }
-.knowledge-link { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 14px; color: var(--blue); }
-.knowledge-link span { font-size: 25px; }
-.agent-panel { border: 1px solid #aac5d3; border-radius: 13px; background: white; padding: 0 14px 12px; }
-.agent-header { margin: 0 -14px 12px; border-radius: 12px 12px 0 0; padding: 11px 18px; display: flex; align-items: center; gap: 26px; background: var(--blue); color: white; }
-.agent-header h2 { font-size: 20px; font-weight: 700; }
-.agent-header p { font-size: 16px; color: #e2edf3; }
-.development-stages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.stage-card { padding: 11px 13px; border-radius: 8px; background: #f1f5f8; }
-.stage-card h3 { color: var(--blue); font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
-.output-name { position: relative; min-height: 40px; margin-bottom: 8px; font-size: 14px; font-weight: 650; line-height: 1.5; color: var(--ink); }
-.output-name .term { vertical-align: top; position: relative; }
-.output-name .term small { position: absolute; left: 0; top: 23px; font-size: 10px; white-space: nowrap; }
-.stage-card p { font-size: 14px; color: #465a69; line-height: 1.85; }
+.slide-shell { width: 100%; height: 100%; padding: 20px 36px; }
+.slide-body { width: 100%; height: 100%; }
+h1 { font-size: 30px; font-weight: 750; line-height: 1.3; letter-spacing: -.035em; margin: 0 0 8px; }
+h2, h3, h4, p { margin: 0; }
+.icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.knowledge-map { display: grid; grid-template-columns: 684px 60px 464px; grid-template-rows: 570px; height: 570px; }
+.knowledge-build { display: grid; grid-template-rows: 124px 52px auto; align-self: center; }
+.previous-data { background: #f0f1f2; border: 1px solid #d5dade; border-radius: 12px; padding: 8px 15px; }
+.previous-data h2 { font-size: 20px; line-height: 1.3; color: #606970; font-weight: 750; }
+.input-sources { display: grid; grid-template-columns: 1fr 26px 1fr; align-items: center; margin-top: 6px; }
+.source-card { background: white; border: 1px solid #dce0e4; border-radius: 7px; padding: 5px 11px; min-height: 72px; }
+.source-card h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; line-height: 1.4; }
+.source-card .icon { width: 23px; height: 23px; color: #78838b; }
+.source-card p { font-size: 11px; line-height: 1.6; color: var(--muted); margin-top: 4px; white-space: nowrap; }
+.input-plus { text-align: center; font-size: 20px; color: #88959c; }
+
+.postmortem-flow { display: flex; align-items: center; justify-content: center; gap: 13px; }
+.postmortem-flow > span { font-size: 34px; color: #6b9984; line-height: 1; }
+.postmortem-flow h2 { font-size: 17px; font-weight: 750; line-height: 1.5; color: var(--knowledge); }
+.postmortem-flow p { font-size: 11px; line-height: 1.6; color: var(--muted); }
+.knowledge-base { background: #eef7f2; border: 1.5px solid #accfbd; border-radius: 13px; padding: 12px; }
+.kb-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.kb-heading h2 { display: flex; align-items: center; gap: 9px; font-size: 25px; font-weight: 750; color: var(--knowledge); letter-spacing: -.03em; line-height: 1.4; }
+.kb-heading .icon { width: 28px; height: 28px; }
+.kb-heading > span { color: var(--muted); font-size: 11px; }
+.knowledge-table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; border: 1px solid #bfd6c9; border-radius: 9px; overflow: hidden; background: white; }
+.pattern-column { width: 110px; }
+.prevention-column { width: 156px; }
+.knowledge-table th, .knowledge-table td { text-align: left; vertical-align: middle; padding: 5px 8px; border-right: 1px solid #e1ebe5; border-bottom: 1px solid #d6e4dc; }
+.knowledge-table tr > :last-child { border-right: 0; }
+.knowledge-table thead th { height: 42px; font-size: 13px; color: var(--knowledge); font-weight: 700; background: #deeee4; line-height: 1.5; }
+.knowledge-table tbody tr { height: 56px; }
+.knowledge-table tbody th { font-size: 14px; font-weight: 700; color: var(--knowledge); line-height: 1.4; background: #f5faf7; }
+.knowledge-table tbody td { font-size: 13px; color: #52695f; line-height: 1.5; letter-spacing: -.015em; }
+.knowledge-table tbody td:nth-child(4) { background: #eef7f2; color: var(--ink); font-weight: 600; }
+.knowledge-table tfoot td { text-align: center; font-size: 16px; line-height: 1; color: #8ca99c; background: #f5faf7; border-bottom: 0; height: 20px; padding: 2px 9px; }
+.reuse-links { position: relative; }
+.reuse-links svg { width: 100%; height: 100%; display: block; }
+.reuse-links path { fill: none; stroke: #64937d; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.reuse-links circle { fill: var(--knowledge); }
+.reuse-links > span { position: absolute; top: 66px; left: 0; width: 60px; text-align: center; color: var(--knowledge); font-size: 11px; line-height: 1.5; }
+.next-product { padding-top: 4px; }
+.next-product > h2 { font-size: 21px; font-weight: 750; line-height: 26px; color: var(--blue); }
+.stage-rows { display: grid; grid-template-rows: repeat(4,118px); gap: 12px; margin-top: 14px; }
+.stage-row { display: grid; grid-template-columns: 64px 1fr; border: 1px solid #d1ddec; border-radius: 10px; background: white; }
+.stage-node { display: flex; flex-direction: column; justify-content: center; align-items: center; background: #edf2f9; border-radius: 9px 0 0 9px; border-right: 1px solid #d1ddec; }
+.stage-node .icon { color: #6482a9; width: 27px; height: 27px; margin-bottom: 8px; }
+.stage-node b { font-size: 12px; color: var(--blue); }
+.stage-content { display: flex; flex-direction: column; justify-content: center; padding: 8px 11px; }
+.effect-label { font-size: 11px; line-height: 1.3; font-weight: 700; color: #6482a9; margin-bottom: 4px; }
+.stage-content h3 { font-size: 17px; font-weight: 750; color: var(--blue); line-height: 1.35; }
+.stage-output { font-size: 12px; font-weight: 400; line-height: 1.6; margin-top: 8px; }
+.stage-row:nth-child(2) .stage-output { padding-bottom: 9px; }
+.stage-output > b { font-weight: 700; }
+.stage-content .term { position: relative; display: inline-block; vertical-align: top; }
+.stage-content .term > b { font-size: 12px; font-weight: 700; display: block; }
+.stage-content .term > small { position: absolute; top: 17px; left: 0; white-space: nowrap; font-size: 8px; line-height: 1.2; font-weight: 400; color: var(--muted); }
+
+.flow-explanation { margin-bottom: 16px; color: #526a7b; }
+.flow-explanation p { font-size: 14px; line-height: 1.5; }
+.flow-explanation strong { color: var(--blue); font-weight: 700; }
 
 html,body{overflow:hidden;background:#111}.deck{position:fixed;inset:0;display:grid;place-items:center}.stage{position:relative;width:1280px;height:720px;transform-origin:center;background:var(--paper);overflow:hidden}.slide{display:none;position:absolute;inset:0;width:1280px;height:720px;background:var(--paper)}.slide.active{display:block}.controls{position:fixed;right:14px;bottom:12px;display:flex;gap:7px;opacity:.25;transition:opacity .2s}.controls:hover,.controls:focus-within{opacity:1}.controls button{border:0;border-radius:50%;width:34px;height:34px;color:white;background:#17212b;font:18px Arial;cursor:pointer}@media print{html,body{overflow:visible;background:white}.deck{position:static;display:block}.stage{transform:none!important;width:auto;height:auto;overflow:visible}.slide{display:block!important;position:relative;page-break-after:always;width:1280px;height:720px}.controls{display:none}@page{size:13.333333in 7.5in;margin:0}}
 </style></head><body><div class="deck"><div class="stage" id="stage">
-<section class="slide active" data-index="0" aria-label="필드 결함 지식 활용 Agent">
+<section class="slide active" data-index="0" aria-label="필드 결함 지식으로 유사 결함 예방">
   <div class="slide-shell">
-    <main class="slide-body"><h1>필드 결함 지식 활용 Agent</h1>
+    <main class="slide-body"><h1>필드 결함 지식으로 유사 결함 예방</h1>
 
-<div class="generation-area previous-generation">
-<div class="generation-heading"><b>이전 세대 제품</b><span>결함 분석 · 지식 정리 · 패턴화</span></div>
-<div class="knowledge-flow" role="group" aria-label="이전 세대 제품의 결함 분석과 지식 축적">
-  <div class="flow-card input-card">
-    <div class="card-label">분석 입력</div>
-    <h2>필드 결함 + 개발·검증 자료</h2>
-    <div class="input-list">
-      <div><b>결함</b><p>고객 이슈·로그·환경·재현 조건</p></div>
-      <div><b>분석</b><p>Root cause 분석서·조치 내역</p></div>
-      <div><b>제품</b><p>요구사항·설계서·Source code</p></div>
-      <div><b>수정</b><p>Code diff·Code review 이력</p></div>
-      <div><b>검증</b><p>Test spec·결과·Coverage</p></div>
+<div class="flow-explanation" role="note" aria-label="전체 방향과 목표">
+  <p>여러 결함·산출물을 연계 분석한 지식으로, <strong>다음 제품에서 놓친 조건을 찾는 LLM Agent 구축</strong></p>
+</div>
+
+<div class="knowledge-map" role="group" aria-label="이전 세대 자료를 LLM Post-mortem으로 분석해 패턴 지식을 구축하고 각 개발 단계의 검증을 보완">
+  <div class="knowledge-build">
+    <section class="previous-data">
+      <h2>이전 세대 데이터</h2>
+      <div class="input-sources">
+        <div class="source-card"><h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h6v7a3 3 0 0 1-6 0V9Z"/><path d="M10 9V7a2 2 0 0 1 4 0v2M5 10h4m6 0h4M5 15h4m6 0h4M7 20l3-2m4 0 3 2M8 4l2 2m4 0 2-2"/></svg>고객 필드 결함</h3><p>고객 이슈 · 로그 · 재현 조건<br>FW version · Host 환경</p></div>
+        <span class="input-plus">＋</span>
+        <div class="source-card"><h3><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5M14 4l-4 16"/></svg>개발·검증 산출물</h3><p>요구사항 · 설계 · Code<br>테스트 실행 이력 · 불량 수정 내역</p></div>
+      </div>
+    </section>
+
+    <div class="postmortem-flow"><span>↓</span><div><h2>LLM Post-mortem</h2><p>공통 원인·미검출 요인을 패턴 지식으로 정리</p></div></div>
+    <section class="knowledge-base">
+      <div class="kb-heading"><h2><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></svg>Knowledge Base</h2><span>패턴 지식 예시</span></div>
+      <table class="knowledge-table" aria-label="동일한 항목으로 누적되는 일반화된 결함 패턴 지식의 구조 예시">
+        <colgroup><col class="pattern-column"><col><col><col class="prevention-column"><col></colgroup>
+        <thead><tr><th scope="col">결함 패턴</th><th scope="col">발생 원인</th><th scope="col">미검출 원인</th><th scope="col">예방·검증 항목</th><th scope="col">적용 조건</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">중단 후<br>복구 실패</th><td>복귀 조건 누락</td><td>중단 시험 누락</td><td>복귀 전이·복구 시험</td><td>Power loss·Reset</td></tr>
+          <tr><th scope="row">반복 취소 시<br>자원 고갈</th><td>취소 시 해제 누락</td><td>반복 취소 시험 누락</td><td>취소 경로 해제 점검</td><td>Command 취소</td></tr>
+        </tbody>
+        <tfoot><tr aria-label="이 외의 결함 패턴도 동일한 항목으로 저장"><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td></tr></tfoot>
+      </table>
+    </section>
+  </div>
+
+  <div class="reuse-links"><span>비교·제안</span><svg viewBox="0 0 60 570" aria-label="Knowledge Base를 LLM Agent가 요구사항, 설계, 구현, 시험에서 활용"><path d="M0 373H22 M22 103V493 M22 103H58 M22 233H58 M22 363H58 M22 493H58"/><path d="M50 96L58 103L50 110 M50 226L58 233L50 240 M50 356L58 363L50 370 M50 486L58 493L50 500"/><circle cx="22" cy="373" r="4"/></svg></div>
+
+  <section class="next-product">
+    <h2>다음 제품 개발</h2>
+    <div class="stage-rows">
+      <div class="stage-row"><div class="stage-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="15" height="17" rx="2"/><path d="M9 2h7v4H9zM8 11l2 2 3-3M8 17l2 2 3-3M15 12h2M15 18h2"/></svg><b>요구사항</b></div><div class="stage-content"><div class="effect-label">기대 효과</div><h3>예외·복구 요구조건 누락 감소</h3><div class="stage-output"><b>요구사항 명세</b>: 중단 후 복구 조건·판정 기준 보완안</div></div></div>
+      <div class="stage-row"><div class="stage-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="7" height="7" rx="1"/><rect x="15" y="14" width="7" height="7" rx="1"/><path d="M9 6h9v8M5 10v7h10"/></svg><b>설계</b></div><div class="stage-content"><div class="effect-label">기대 효과</div><h3>설계에서 놓친 실패 가능성 발견</h3><div class="stage-output"><b>설계</b>: 복구·동시 처리 경로 보완안<br><b><span class="term"><b>FMEA</b><small>Failure Mode and Effects Analysis</small></span></b>: 실패 조건·예방 대책 보완안</div></div></div>
+      <div class="stage-row"><div class="stage-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5M14 4l-4 16"/></svg><b>구현</b></div><div class="stage-content"><div class="effect-label">기대 효과</div><h3>유사 결함 가능성의 조기 발견</h3><div class="stage-output"><b>Code review</b>: 의심 코드·수정안·Unit test 제안</div></div></div>
+      <div class="stage-row"><div class="stage-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4 19a1 1 0 0 0 1 2h14a1 1 0 0 0 1-2L14 9V3M8 14h8M9 17h1m4 1h1"/></svg><b>시험</b></div><div class="stage-content"><div class="effect-label">기대 효과</div><h3>누락 조건까지 시험 범위 확대</h3><div class="stage-output"><b>Test spec</b>: 누락 조건·판정 기준 보완안<br><b>Test code</b>: 해당 조건의 테스트 추가안</div></div></div>
     </div>
-    <div class="input-key">결함 ID·제품 버전으로 자료 연결</div>
-  </div>
-  <div class="flow-arrow" aria-label="분석">→</div>
-  <div class="flow-card analysis-card">
-    <div class="card-label">LLM Agent · 지식 정리</div>
-    <h2>근거 기반 분류 · 원인 분석</h2>
-    <div class="analysis-method"><div class="term"><b>ODC</b><small>Orthogonal Defect<br>Classification</small></div><p>수정 내용에 따라 결함 유형 분류<br>결함이 드러난 실행 조건 분류</p></div>
-    <div class="type-list">유형: Function · Interface · Checking · Timing 등</div>
-    <div class="cause-analysis"><b>원인 분석</b><p>설계·코드·시험 대조<br>발생 원인·검출 누락 원인 검토</p></div>
-  </div>
-  <div class="flow-arrow" aria-label="지식으로 정리">→</div>
-  <div class="flow-card knowledge-card">
-    <div class="card-label">패턴 · 지식</div>
-    <h2>공통 결함 패턴 · 예방 기준</h2>
-    <div class="knowledge-items"><p>유형·실행 조건별 결함 묶음</p><p>공통 원인 · 예방·검출 기준</p><p>적용 범위 · 근거 자료</p></div>
-    <div class="knowledge-evidence">각 지식에 근거 위치 기록<br>결함 ID·문서 항목·Code 위치·Test ID</div>
-  </div>
-</div>
-</div>
-
-<div class="generation-area next-generation">
-<div class="application-inputs" role="group" aria-label="다음 제품의 개발 자료와 이전 세대에서 축적한 지식">
-  <div class="current-input"><b>다음 제품 개발</b><span>입력 · 요구사항·설계서·Source code·Code diff·Test code·Test spec·Static analysis 결과</span><i>↓</i></div>
-  <div class="knowledge-link"><span>↓</span> 이전 세대에서 축적한 지식</div>
-</div>
-
-<div class="agent-panel">
-  <div class="agent-header"><h2>LLM Agent · 지식 활용</h2><p>다음 제품 산출물과 축적 지식 대조 → 보완안 제안</p></div>
-  <div class="development-stages">
-    <div class="stage-card"><h3>요구사항</h3><div class="output-name">요구사항 명세서<br>Traceability matrix</div><p>예외·복구 조건, 검증 기준 보완<br>이전 결함–요구사항–시험 연결</p></div>
-    <div class="stage-card"><h3>설계</h3><div class="output-name">설계서 · <span class="term"><b>FMEA</b><small>Failure Mode and Effects Analysis</small></span></div><p>Interface·상태 전이·복구 검토<br>Failure mode·원인·대책 보완</p></div>
-    <div class="stage-card"><h3>구현</h3><div class="output-name">Source code · Unit test</div><p>Code review·Static analysis<br>수정안·Unit test 보완안</p></div>
-    <div class="stage-card"><h3>시험</h3><div class="output-name">Test spec · Regression suite</div><p>Fault injection·HIL 시나리오<br>결함 패턴 기반 Test case 추가</p></div>
-  </div>
-</div>
+  </section>
 </div></main>
   </div>
 </section></div></div>
 
 <script>(() => {
-  const title="필드 결함 지식 활용 Agent";
+  const title="필드 결함 지식으로 유사 결함 예방";
   const slides=[...document.querySelectorAll('.slide')], stage=document.getElementById('stage'); let current=0;
   function resize(){const s=Math.min(innerWidth/1280,innerHeight/720);stage.style.transform='scale('+s+')'}
   function show(n,write=true){current=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('active',i===current));if(write)history.replaceState(null,'','#'+(current+1));document.title=(current+1)+'/'+slides.length+' · '+title}
